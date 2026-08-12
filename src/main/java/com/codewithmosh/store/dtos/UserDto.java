@@ -1,11 +1,16 @@
 package com.codewithmosh.store.dtos;
 
 import com.codewithmosh.store.entities.User;
+import java.io.Serializable;
 
 /**
- * UserDto
+ * DTO for {@link User}
  */
-public record UserDto(Long id, String name, String email) {
+public record UserDto(
+    Long id,
+    String name,
+    String email
+) implements Serializable {
     public static UserDto of(User u) {
         return new UserDto(u.getId(), u.getName(), u.getEmail());
     }

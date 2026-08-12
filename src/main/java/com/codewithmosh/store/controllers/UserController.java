@@ -1,6 +1,7 @@
 package com.codewithmosh.store.controllers;
 
 import com.codewithmosh.store.dtos.UserDto;
+import com.codewithmosh.store.mappers.UserMapper;
 import com.codewithmosh.store.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class UserController {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @GetMapping
     public Iterable<UserDto> getAllUsers() {
         return userRepository
             .findAll()
             .stream()
-            .map(u -> UserDto.of(u))
+            .map(userMapper::toDto)
             .toList();
     }
 
@@ -32,7 +34,9 @@ public class UserController {
     public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
         var user = userRepository.findById(id).orElse(null);
         if (user == null) return ResponseEntity.notFound().build();
-        var userDto = UserDto.of(user);
+        System.out.println(user.getId());
+        // var userDto = UserDto.of(user);
+        var userDto = userMapper.toDto(user);
         return ResponseEntity.ok(userDto);
     }
 }
