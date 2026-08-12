@@ -1,6 +1,7 @@
 package com.codewithmosh.store.dtos;
 
 import com.codewithmosh.store.entities.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 
 /**
