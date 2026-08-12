@@ -1,4 +1,4 @@
-package com.codewithmosh.store.dtos;
+package com.codewithmosh.store.users.dto.request;
 
 import jakarta.validation.constraints.Email;
 import lombok.Data;
@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
  * CreateUserDto
  */
 @Data
-public class CreateUserDto {
+public class UserCreateRequest {
 
     private String name;
 

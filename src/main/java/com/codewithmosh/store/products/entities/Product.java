@@ -1,9 +1,8 @@
-package com.codewithmosh.store.entities;
+package com.codewithmosh.store.products.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.math.BigDecimal;
+import lombok.*;
 
 @Getter
 @Setter
@@ -13,6 +12,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "products")
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

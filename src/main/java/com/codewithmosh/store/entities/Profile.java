@@ -1,9 +1,9 @@
 package com.codewithmosh.store.entities;
 
+import com.codewithmosh.store.users.entities.User;
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDate;
+import lombok.*;
 
 @Builder
 @AllArgsConstructor
@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "profiles")
 public class Profile {
+
     @Id
     @Column(name = "id")
     private Long id;

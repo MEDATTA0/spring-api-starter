@@ -1,10 +1,9 @@
-package com.codewithmosh.store.controllers;
+package com.codewithmosh.store.products;
 
-import com.codewithmosh.store.dtos.ProductDto;
-import com.codewithmosh.store.dtos.ProductFilterDto;
-import com.codewithmosh.store.entities.Product;
-import com.codewithmosh.store.mappers.ProductMapper;
-import com.codewithmosh.store.repositories.ProductRepository;
+import com.codewithmosh.store.products.dto.request.ProductFilterDto;
+import com.codewithmosh.store.products.dto.response.ProductResponse;
+import com.codewithmosh.store.products.entities.Product;
+import com.codewithmosh.store.products.repositories.ProductRepository;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -13,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,7 +28,9 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping
-    public Iterable<ProductDto> getAllProduct(@Valid ProductFilterDto dto) {
+    public Iterable<ProductResponse> getAllProduct(
+        @Valid @RequestParam ProductFilterDto dto
+    ) {
         List<Product> products;
         var categoryId = dto.getCategoryId();
         if (categoryId != null) products = productRepository.findByCategoryId(
@@ -40,7 +42,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getProduct(@PathVariable Long id) {
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable Long id) {
         var product = productRepository.findById(id).orElse(null);
         if (product == null) return ResponseEntity.notFound().build();
         var pDto = productMapper.toDto(product);

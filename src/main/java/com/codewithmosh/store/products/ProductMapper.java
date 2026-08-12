@@ -1,7 +1,7 @@
-package com.codewithmosh.store.mappers;
+package com.codewithmosh.store.products;
 
-import com.codewithmosh.store.dtos.ProductDto;
-import com.codewithmosh.store.entities.Product;
+import com.codewithmosh.store.products.dto.response.ProductResponse;
+import com.codewithmosh.store.products.entities.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -11,5 +11,5 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
     @Mapping(source = "category.id", target = "categoryId")
-    ProductDto toDto(Product p);
+    ProductResponse toDto(Product p);
 }

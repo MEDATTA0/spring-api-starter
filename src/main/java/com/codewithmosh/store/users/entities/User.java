@@ -1,12 +1,14 @@
-package com.codewithmosh.store.entities;
+package com.codewithmosh.store.users.entities;
 
+import com.codewithmosh.store.entities.Address;
+import com.codewithmosh.store.entities.Profile;
+import com.codewithmosh.store.products.entities.Product;
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import lombok.*;
 
 @Setter
 @Getter
@@ -16,6 +18,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -30,7 +33,11 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(
+        mappedBy = "user",
+        cascade = { CascadeType.PERSIST, CascadeType.REMOVE },
+        orphanRemoval = true
+    )
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
@@ -61,9 +68,18 @@ public class User {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "name = " + name + ", " +
-                "email = " + email + ")";
+        return (
+            getClass().getSimpleName() +
+            "(" +
+            "id = " +
+            id +
+            ", " +
+            "name = " +
+            name +
+            ", " +
+            "email = " +
+            email +
+            ")"
+        );
     }
 }

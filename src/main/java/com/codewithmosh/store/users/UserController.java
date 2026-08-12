@@ -1,14 +1,19 @@
-package com.codewithmosh.store.controllers;
+package com.codewithmosh.store.users;
 
-import com.codewithmosh.store.dtos.UserDto;
-import com.codewithmosh.store.mappers.UserMapper;
-import com.codewithmosh.store.repositories.UserRepository;
+import com.codewithmosh.store.users.dto.request.UserCreateRequest;
+import com.codewithmosh.store.users.dto.response.UserDto;
+import com.codewithmosh.store.users.repositories.UserRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * UserController
@@ -20,6 +25,21 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
+    @PostMapping
+    public ResponseEntity<UserDto> createUser(
+        @Valid @RequestBody UserCreateRequest dto,
+        UriComponentsBuilder uriBuilder
+    ) {
+        var user = userMapper.toEntity(dto);
+        userRepository.save(user);
+        var userDto = userMapper.toDto(user);
+        var uri = uriBuilder
+            .path("/users/{id}")
+            .buildAndExpand(userDto.id())
+            .toUri();
+        return ResponseEntity.created(uri).body(userDto);
+    }
 
     @GetMapping
     public Iterable<UserDto> getAllUsers() {
@@ -39,4 +59,7 @@ public class UserController {
         var userDto = userMapper.toDto(user);
         return ResponseEntity.ok(userDto);
     }
+
+    // @PatchMapping("/{id}")
+    // public UserDto updateUserDto(@PathVariable(name = "id") Long id) {}
 }
