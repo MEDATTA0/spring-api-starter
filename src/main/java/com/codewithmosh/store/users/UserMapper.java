@@ -1,6 +1,7 @@
 package com.codewithmosh.store.users;
 
 import com.codewithmosh.store.users.dto.request.UserCreateRequest;
+import com.codewithmosh.store.users.dto.request.UserUpdateRequest;
 import com.codewithmosh.store.users.dto.response.UserDto;
 import com.codewithmosh.store.users.entities.User;
 import org.mapstruct.Mapper;
@@ -12,4 +13,5 @@ import org.mapstruct.Mapper;
 public interface UserMapper {
     UserDto toDto(User user);
     User toEntity(UserCreateRequest dto);
+    void update(UserUpdateRequest request, User user);
 }
