@@ -6,15 +6,15 @@ import java.math.BigDecimal;
 /**
  * ProductDto
  */
-public record ProductResponse(
+public record ProductDto(
     Long id,
     String name,
     String description,
     BigDecimal price,
     Byte categoryId
 ) {
-    public static ProductResponse of(Product p) {
-        return new ProductResponse(
+    public static ProductDto of(Product p) {
+        return new ProductDto(
             p.getId(),
             p.getName(),
             p.getDescription(),
